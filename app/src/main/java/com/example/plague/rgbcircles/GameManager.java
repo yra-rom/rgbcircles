@@ -12,6 +12,7 @@ public class GameManager extends Activity{
     public static final int MAX_ENEMY_CIRCLES = 10;
     private MainCircle mainCircle;
     private ArrayList<EnemyCircle> circles;
+    private ArrayList<Thread> threads;
     private CanvasView canvasView;
     private static int width;
 
@@ -40,6 +41,7 @@ public class GameManager extends Activity{
             circles.add(circle);
         }
         calculateAndSetCirclesColor();
+        moveEnemyCircles();
     }
 
     private void calculateAndSetCirclesColor() {
@@ -66,7 +68,7 @@ public class GameManager extends Activity{
     public void onTouchEvent(int x, int y){
         mainCircle.moveMainCircleWhenTouch(x,y);
         checkCollision();
-        moveCircles();
+        //moveCircles();
     }
 
     public void checkCollision() {
@@ -97,6 +99,9 @@ public class GameManager extends Activity{
         mainCircle.initRadius();
         initEnemyCircles();
         canvasView.redraw();
+        for (Thread thread : threads){
+            thread.interrupt();
+        }
     }
 
     private void moveCircles(){
@@ -105,4 +110,12 @@ public class GameManager extends Activity{
         }
     }
 
+    private void moveEnemyCircles(){
+        threads = new ArrayList<>();
+        for (EnemyCircle circle : circles){
+            Thread thread = new Thread(new EnemyThread(circle, canvasView, this));
+            threads.add(thread);
+            thread.start();
+        }
+    }
 }
