@@ -11,8 +11,8 @@ public class EnemyCircle extends SimpleCircle {
     public static final int ENEMY_COLOR = Color.RED;
     public static final int FOOD_COLOR = Color.rgb(0, 200, 0);
     public static final int RANDOM_SPEED = 10;
-    private int dx, dy;
-    private boolean alive;
+    protected int dx, dy;
+    protected boolean alive;
 
     public EnemyCircle(int x, int y, int radius,int dx, int dy) {
         super(x, y, radius);
@@ -51,7 +51,7 @@ public class EnemyCircle extends SimpleCircle {
         checkBorder();
     }
 
-    private void checkBorder() {
+    protected void checkBorder() {
         if(x > GameManager.getWidth() || x < 0){
             dx = -dx;
         }
