@@ -96,10 +96,21 @@ public class GameManager extends Activity{
     }
 
     private void gameEnd(String text){
+        setNotAliveCircles();
+        killThreads();
         canvasView.showText(text);
         mainCircle.initRadius();
         initEnemyCircles();
         canvasView.redraw();
+    }
+
+    private void setNotAliveCircles(){
+        for (EnemyCircle circle: circles) {
+            circle.setAlive(false);
+        }
+    }
+
+    private void killThreads(){
         for (Thread thread : threads){
             thread.interrupt();
         }
