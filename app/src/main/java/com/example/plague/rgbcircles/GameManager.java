@@ -72,12 +72,12 @@ public class GameManager extends Activity{
     }
 
     public void checkCollision() {
-        SimpleCircle circlrForDell = null;
-        for (EnemyCircle  circle: circles) {
+        EnemyCircle circleForDell = null;
+        for (EnemyCircle circle: circles) {
             if(mainCircle.isIntersected(circle)){
                 if(circle.isSmallerThen(mainCircle)){
                     mainCircle.growRadius(circle);
-                    circlrForDell = circle;
+                    circleForDell = circle;
                     calculateAndSetCirclesColor();
                     break;
                 }
@@ -86,8 +86,9 @@ public class GameManager extends Activity{
                 }
             }
         }
-        if(circlrForDell != null){
-            circles.remove(circlrForDell);
+        if(circleForDell != null){
+            circleForDell.setAlive(false);
+            circles.remove(circleForDell);
         }
         if(circles.isEmpty()){
             gameEnd("YOU WIN");
@@ -102,6 +103,7 @@ public class GameManager extends Activity{
         for (Thread thread : threads){
             thread.interrupt();
         }
+        threads.clear();
     }
 
     private void moveCircles(){

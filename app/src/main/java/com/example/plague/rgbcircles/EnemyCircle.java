@@ -12,11 +12,13 @@ public class EnemyCircle extends SimpleCircle {
     public static final int FOOD_COLOR = Color.rgb(0, 200, 0);
     public static final int RANDOM_SPEED = 10;
     private int dx, dy;
+    private boolean alive;
 
     public EnemyCircle(int x, int y, int radius,int dx, int dy) {
         super(x, y, radius);
         this.dx = dx;
         this.dy = dy;
+        this.alive = true;
     }
 
     public static EnemyCircle getRandomCircle() {
@@ -56,5 +58,13 @@ public class EnemyCircle extends SimpleCircle {
         if(y > GameManager.getHeight() || y < 0){
             dy = -dy;
         }
+    }
+
+    public boolean getAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }
